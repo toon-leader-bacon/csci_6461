@@ -1,13 +1,15 @@
-package org.nocab.nocabmachine;
+package org.nocab.nocabmachine.nocab;
 
 import java.util.ArrayList;
 
 public class BinaryNumber {
 
     public BinaryNumber() {
-        this.setValue(new ArrayList<>(1) {{
-            add(false);
-        }});
+        this.setValue(new ArrayList<>(1) {
+            {
+                add(false);
+            }
+        });
     }
 
     public BinaryNumber(ArrayList<Boolean> value) {

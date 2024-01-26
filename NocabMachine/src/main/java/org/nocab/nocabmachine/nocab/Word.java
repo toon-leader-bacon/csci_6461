@@ -1,4 +1,4 @@
-package org.nocab.nocabmachine;
+package org.nocab.nocabmachine.nocab;
 
 import java.util.ArrayList;
 

@@ -1,5 +1,7 @@
 package org.nocab.nocabmachine;
 
+import org.nocab.nocabmachine.nocab.Word;
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
