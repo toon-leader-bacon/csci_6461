@@ -6,7 +6,6 @@ public class Instruction {
     int shiftAmt  = WORD_SIZE - OPCODE_SIZE;
 
 
-
     public Instruction(String type,int[] data) {
         ISA isa = new ISA();
 
