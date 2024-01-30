@@ -85,6 +85,15 @@ public class BinaryNumber {
         return sb.toString();
     }
 
+    public String toString_Octal(int stringLength) {
+        StringBuilder result = new StringBuilder();
+        result.append(this.toString_Octal());
+        while (result.length() < stringLength) {
+            result.insert(0, '0');
+        }
+        return result.toString();
+    }
+
     private int threeBitsToOctal(boolean fours, boolean twos, boolean ones) {
         int result = 0;
         if (fours) {

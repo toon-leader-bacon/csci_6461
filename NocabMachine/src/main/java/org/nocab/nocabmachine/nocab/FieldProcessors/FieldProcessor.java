@@ -11,6 +11,9 @@ public abstract class FieldProcessor {
     public abstract ArrayList<Field> process(String fields);
 
     List<String> splitFields(String fields) {
+        if (fields.isEmpty()) {
+            return new ArrayList<>();
+        }
         return Arrays.asList(fields.split(","));
     }
 }

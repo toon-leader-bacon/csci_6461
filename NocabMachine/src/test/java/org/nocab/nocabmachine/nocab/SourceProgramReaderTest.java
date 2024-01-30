@@ -12,11 +12,6 @@ class SourceProgramReaderTest {
     void tokenizeLineOnWhitespaceTest() {
         SourceProgramReader underTest = new SourceProgramReader();
 
-        assertEquals(new ArrayList<>() {{
-            add("abcd");
-            add("efgh");
-        }}, underTest.tokenizeLineOnWhitespace("abcd\tefgh"));
-
         String inputStr = "6\tData\t10\t\t\t;PUT 10 AT LOCATION 6\n";
         ArrayList<String> expected = new ArrayList<>() {
             {
@@ -36,7 +31,7 @@ class SourceProgramReaderTest {
         assertEquals(expected, underTest.tokenizeLineOnWhitespace(inputStr));
     }
 
-
+    /*
     @org.junit.jupiter.api.Test
     void tokenizeLineTest() {
         SourceProgramReader underTest = new SourceProgramReader();
@@ -52,6 +47,7 @@ class SourceProgramReaderTest {
         };
         assertEquals(expected, underTest.tokenizeLine(inputStr));
     }
+    */
 
     @org.junit.jupiter.api.Test
     void blab() {

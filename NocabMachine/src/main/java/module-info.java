@@ -11,4 +11,6 @@ module org.nocab.nocabmachine {
     opens org.nocab.nocabmachine.nocab to javafx.fxml;
     exports org.nocab.nocabmachine.nocab.FieldProcessors;
     opens org.nocab.nocabmachine.nocab.FieldProcessors to javafx.fxml;
+    exports org.nocab.nocabmachine.nocab.DataStructures;
+    opens org.nocab.nocabmachine.nocab.DataStructures to javafx.fxml;
 }

@@ -20,6 +20,13 @@ public class Field {
         this((short) value_, (short) size_);
     }
 
+    public Field(String value_, int size_) {
+        Field other = Field.fromDecimalString(value_, size_);
+        this.value = other.value;
+        this.size = other.size;
+    }
+
+
     public static Field fromDecimalString(String value, int size) {
         if (!Utility.isNumeric((value))) {
             throw new IllegalArgumentException("Can not create field from value string (decimal): " + value);
@@ -35,7 +42,7 @@ public class Field {
      *
      * @return A string representation of this binary number
      */
-    String toBinString() {
+    public String toBinString() {
         StringBuilder result = new StringBuilder(this.size);
 
         // Initialize the result with the minimal binary representation
@@ -71,7 +78,7 @@ public class Field {
         return this.value == other.value &&
                 this.size == other.size;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
