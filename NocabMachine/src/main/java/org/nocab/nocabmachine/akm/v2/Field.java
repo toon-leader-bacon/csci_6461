@@ -6,11 +6,26 @@ public class Field {
     public fieldType type;
 
     public enum fieldType{
-        R,IX,I,Addr,Blank
+        OpCode,R,IX,I,Addr,Blank,Other
     };
 
-    public Field(int value_, int size_) {
+    public Field(int value_, int size_, fieldType ft_) {
         this.value = (short) value_;
         this.size = (short) size_;
+        this.type = ft_;
     }
+
+
+    public short getValue() {
+        return this.value;
+    }
+    public short getSize(){
+        return this.size;
+    }
+    public fieldType getType(fieldType ft){
+        return this.type;
+    }
+
+
+
 }

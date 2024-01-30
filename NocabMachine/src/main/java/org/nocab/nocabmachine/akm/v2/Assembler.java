@@ -4,31 +4,55 @@ import org.nocab.nocabmachine.akm.v2.fields.*;
 
 public class Assembler {
     ISA isa = new ISA();
-    static short location; // location
-    static short[] GPR = new short[4]; // general purpose registers
-    static short[] IXR = new short[3]; // index registers
+//    static short location; // location
+//    static short[] GPR = new short[4]; // general purpose registers
+//    static short[] IXR = new short[3]; // index registers
 
     private int strToInt(String item) {
+        // convert an integer string to its integer form
         try {
             return Integer.parseInt(item);
         }
         catch(NumberFormatException e) {
-            System.out.println(item + " not found");
+            System.out.println(item + " not an Integer");
         }
         return 0;
     }
 
     public String[] tokenize(String instruction) {
+        // split each Instruction line by whitespace and commas
+        // return as a list of strings, which will have the following format:
+        //     ["operation","field 1,"field 2",..."field n"]
         return instruction.split("[ ,]+");
     }
 
-    private Field getOpcode(String command) {
-        return isa.ITable.get(command);
+    private Field getOpcode(String operation) {
+        // query Instruction Table for operations, and return the corresponding OpCode Field
+        return isa.ITable.get(operation);
+    }
+
+    private Field setIField(String[] tokens, int checkIndex){
+        // based on how many tokens are passed, determine if an 'I' token has been included
+        // if so, convert 'I' token to its integer form, and return 'I' field
+        return (tokens.length > checkIndex) ? new I(strToInt(tokens[checkIndex])) : new I(0);
     }
 
     private Field[] getFields(Field opcode, String[] tokens) {
-        Field[] fields = new Field[tokens.length - 1];
+        Field[] fields = new Field[4];
+
         switch (opcode.value) {
+            // Special Codes //
+            case(0):    //HLT (stops the machine)
+                // 000000 ---- 000000
+                fields = new Field[2];
+                fields[0] = new Blank(4);
+                fields[1] = new Field(0,0, Field.fieldType.Other); //00
+                break;
+            case(45):   //TRAP code
+                fields = new Field[2];
+                fields[0] = new Blank(6);
+                fields[1] = new Field(strToInt(tokens[1]),4, Field.fieldType.Other); //code
+                break;
 
             // Register, IndexReg, Address, [,I] factory //
                 //Load/Store Instruction Type
@@ -50,14 +74,15 @@ public class Assembler {
             case(41):   //CNVRT r,x,addr[,I]
             case(42):   //LDFR fr,x,addr[,I]
             case(43):   //STFR fr,x,addr[,I]
+                // r,x,addr[,I] (I if 5 tokens)
+                // GR,IX,I,ADDRS
                 fields[0] = new R(strToInt(tokens[1])); //R
                 fields[1] = new IX(strToInt(tokens[2])); //IX
+                //if there is a token for [,I]
+                fields[2] = setIField(tokens,4);
                 fields[3] = new Addr(strToInt(tokens[3])); //addr
-                if (tokens[4] != null) //if there is a token for [,I]
-                    fields[2] = new I(1); //set I
-                else
-                    fields[2] = new I(0); //set no I
                 break;
+
 
             // IndexReg, Address, [,I] factory //
                 //Load/Store Instruction Type
@@ -67,92 +92,138 @@ public class Assembler {
             case(6):    //JZ x,addr[,I]
             case(11):   //JMA x,addr[,I]
             case(12):   //JSR x,addr[,I]
-
-                fields[1] = new IX(strToInt(tokens[2])); //IX
-                fields[3] = new Addr(strToInt(tokens[3])); //addr
-                if (tokens[4] != null) //if there is a token for [,I]
-                    fields[2] = new I(1); //set I
-                else
-                    fields[2] = new I(0); //set no I
+                // x,addr[,I] (I if 3 tokens)
+                // --,IX,I,ADDRS
+                fields[0] = new Blank(2); // --
+                fields[1] = new IX(strToInt(tokens[1])); //IX
+                fields[2] = setIField(tokens,3); //I
+                fields[3] = new Addr(strToInt(tokens[2])); //addr
                 break;
 
-            // Transfer Instruction type
-            case(44):   //SETCCE r
-            case(10):   //JCC cc,x,addr[,I]
-            case(13):   //RFS Immed
 
-                fields[0] = new Field(strToInt(tokens[1]), 2); //R
-                fields[1] = new Field(strToInt(tokens[2]), 2); //IX
-                fields[3] = new Field(strToInt(tokens[3]), 5); //addr
-                if (tokens[4] != null) //if there is a token for [,I]
-                    fields[2] = new Field(1, 1); //set I
-                else
-                    fields[2] = new Field(0, 1); //set no I
+            // Misc Formats //
+                // Transfer Instruction type
+                // (Have same format as load/store instructions)
+            case(44):   //SETCCE r
+                // r
+                // GR,--,-,-----
+                fields[0] = new R(strToInt(tokens[1])); //R
+                fields[1] = new Blank(2);//IX
+                fields[2] = new Blank(1);//I
+                fields[3] = new Blank(5);//addr
+                break;
+
+            case(10):   //JCC cc,x,addr[,I]
+                // cc,x,addr[,I] (I if 5 tokens)
+                // CC,IX,I,ADDRS
+                fields[0] = new Field(strToInt(tokens[1]),2, Field.fieldType.Other); //CC
+                fields[1] = new IX(strToInt(tokens[2])); //IX
+                fields[2] = setIField(tokens,4); //I
+                fields[3] = new Addr(strToInt(tokens[3]));
+                break;
+
+                // Transfer Instruction type
+            case(13):   //RFS Immed
+                // Immed
+                // --,--,-,ADDRS
+                fields[0] = new Blank(2);//R
+                fields[1] = new Blank(2);//IX
+                fields[2] = new Blank(1);//I
+                fields[3] = new Addr(strToInt(tokens[1]));   //Immed
                 break;
 
                 //Immediate Instructions
             case(20):   //AIR r,Immed
             case(21):   //SIR r,Immed
-                fields[0] = new Field(strToInt(tokens[1]),2);   //R
-                fields[1] = new Field(strToInt(tokens[2]), 2);  //immed
+                // r,Immed
+                // GR,--,-,ADDRS
+                fields[0] = new R(strToInt(tokens[1]));//R
+                fields[1] = new Blank(2);//IX
+                fields[2] = new Blank(1);//I
+                fields[3] = new Addr(strToInt(tokens[2]));   //Immed
                 break;
+
                 // Reg to reg instructions
             case(22):   //MLT rx,ry
             case(23):   //DVD rx,ry
             case(24):   //TRR rx,ry
             case(25):   //AND rx,ry
             case(26):   //ORR rx,ry
-                fields[0] = new Field(strToInt(tokens[1]),2);   //Rx
-                fields[1] = new Field(strToInt(tokens[2]),2);   //Ry
-                break;
             case(27):   //NOT rx
+                // rx,ry (Ry if 3 tokens)
+                // RX,RY,------
+                // rx
+                // GR,--,------
+                fields = new Field[3];  //replace default fields
                 fields[0] = new R(strToInt(tokens[1]));   //Rx
+                fields[1] = (tokens.length > 2) ? new R(strToInt(tokens[2])): new Blank(2);   //Ry or --
+                fields[2] = new Blank(6);
                 break;
 
                 // Logical shifts
             case(30):   //SRC r,count,L/R,A/L
             case(31):   //RRC r,count,L/R,A/L
+                // r,count,L/R,A/L
+                // GR,L,A,--,CNTS
+                fields = new Field[5];  //replace default fields
                 fields[0] = new R(strToInt(tokens[1]));//R
-                fields[3] = new Addr(strToInt(tokens[2]));//count
-                fields[2] = new Field(strToInt(tokens[3]),1);//L/R
-                fields[1] = new Field(strToInt(tokens[4]),1);//A/L
+                fields[1] = new Field(strToInt(tokens[4]),1, Field.fieldType.Other);//A/L
+                fields[2] = new Field(strToInt(tokens[3]),1, Field.fieldType.Other);//L/R
+                fields[3] = new Blank(2);
+                fields[4] = new Field(strToInt(tokens[2]),4,Field.fieldType.Addr);//count
                 break;
 
             //I/O Operations
             case(32):   //IN r,devid
             case(33):   //OUT r,devid
             case(34):   //CHK r,devid
-                fields[0] = new R(strToInt(tokens[1]));
-                fields[1] = new Addr(strToInt(tokens[2]));
+                // r,devid
+                // GR,---,DEVID
+                fields = new Field[3];  //replace default fields
+                fields[0] = new R(strToInt(tokens[1])); //R
+                fields[1] = new Blank(3);
+                fields[2] = new Field(strToInt(tokens[2]),5, Field.fieldType.Other); //DevID
+                break;
 
+            default:
+                throw new IllegalArgumentException("Unexpected Instruction");
         }
         return fields;
     }
 
-    private int computeEffectiveAddress(String[] tokens) {
-        return 0; //not yet implemented
-    }
+//    private int computeEffectiveAddress(String[] tokens) {
+//        return 0; //not yet implemented
+//    }
 
+
+    public void printListing(short location, short code, String instruction) {
+        System.out.printf("%o\t%o\t%s",location,code,instruction);
+    }
 
     public void assemble(String[] instructions) {
         int PC = 0;
-        for (String I : instructions) {
+
+        for (String I : instructions) { //instructions are already split by line
             //split instruction into tokens
-            String[] tokens = this.tokenize(I);
-            //["LDR", "1", "2", "1","10"]
+            String[] tokens = this.tokenize(I);     //eg.["LDR", "1", "2", "10","1"]
 
             //get opcode from Instruction Table
             Field opcode = this.getOpcode(tokens[0]);
 
-            if (opcode.value == 0) {
+            if (opcode.value == 0) { //Halt
                 PC = strToInt(tokens[1]);
             }
             else {
                 //based on opcode, determine values in each field
                 Field[] fields = getFields(opcode,tokens);
-                Instruction instr = new Instruction(opcode,fields);
+                // and construct an Instruction object
+                Instruction instructionCode = new Instruction(opcode,fields);
+
                 // print the instruction to console ** (CHANGE FOR FINAL PRODUCTION)
-                System.out.printf("%o\t%o\t%s",PC,instr,I);
+                // with the following format:
+                //
+                //
+                System.out.printf("%o\t%o\t%s",PC,instructionCode,I);
             }
 
 
