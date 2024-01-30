@@ -18,7 +18,7 @@ public class SourceProgramReader {
     public SourceProgramReader() {
     }
 
-    void blab(String fileToRead) {
+    void blab(String fileToRead, boolean repeatSourceProgramLine) {
         // Parse the source program line by line
         // Split each line on tab characters
         // First token = memory location (or empty)
@@ -31,6 +31,7 @@ public class SourceProgramReader {
             reader = new BufferedReader(new FileReader(fileToRead));
             String line = reader.readLine();
 
+            int nextMemoryLocation = 0;
             // Loop over each line in the file
             while (line != null) {
                 if (line.isEmpty()) {
@@ -38,8 +39,28 @@ public class SourceProgramReader {
                     continue;
                 }
                 //System.out.println("Processing line: " + line);
-                SourceProgramLine spLine = processLine(line);
+                SourceProgramLine spLine = buildSourceProgramLine(line);
+
+                // Figure out the memory location part
+                if (spLine.memoryLocation == null) {
+                    // LOC instructions will have a null memory location
+                    // Simply use the "next memory location" as this line's location
+                    spLine.memoryLocation = new BinaryNumber(nextMemoryLocation);
+                } else {
+                    // Otherwise, this instruction has a memory location provided.
+                    // Use it, and remember it
+                    nextMemoryLocation = spLine.memoryLocation.toIntBase10();
+                }
+                // No matter what, increment the next memory location pointer
+                nextMemoryLocation++;
+
+
                 String assemble = spLine.assemble();
+                if (repeatSourceProgramLine) {
+                    assemble += "\t" + line;
+                }
+                assemble = assemble.replace("\n", "");
+                assemble += "\n";
                 System.out.print(assemble);
 
                 // grab next line from file
@@ -52,24 +73,30 @@ public class SourceProgramReader {
         }
     }
 
-    SourceProgramLine processLine(String line) {
+
+    SourceProgramLine buildSourceProgramLine(String line) {
         ArrayList<String> tokens = tokenizeLineOnWhitespace(line);
 
         // Extract the memory location (if provided)
         // NOTE: The first token may be the empty string
-        String memoryLocation = Utility.isNumeric(tokens.get(0)) ? (tokens.get(0)) : ("0");
-        BinaryNumber memLocBinary = new BinaryNumber(Integer.toBinaryString(Integer.parseInt(memoryLocation)));
+        BinaryNumber memLocBinary = null;
+        if (Utility.isNumeric(tokens.getFirst())) {
+            memLocBinary = new BinaryNumber(Integer.parseInt(tokens.getFirst()));
+        }
 
         // Extract the OpCode
         String operationCodeName = getOperationCodeName(tokens);
+        String fields = (operationCodeName.equalsIgnoreCase("hlt")) ? "" : getFields(tokens);
         // Build the instruction structure
         Instruction instruction = new Instruction(
                 OpCodeFieldFactory.opCodeStrToField(operationCodeName),
-                processFields(operationCodeName, getFields(tokens))
+                processFields(operationCodeName, fields)
         );
 
         // Everything else can be ignored
-        String comments = processComments(tokens.subList(3, tokens.size()));
+        String comments = (tokens.size() >= 3) ?
+                processComments(tokens.subList(3, tokens.size())) :
+                "";
         return new SourceProgramLine(memLocBinary, instruction, comments);
 
     }
@@ -133,7 +160,7 @@ public class SourceProgramReader {
                 yield new RXAIFieldProcessor(false, false, true);
             }
             /* Arithmetic and Logical Instructions pg 16 */
-            case "arm", // 16oct:  Add Memory to Register
+            case "amr", // 16oct:  Add Memory to Register
                     "smr" // Subtract Memory from Register
                     -> {
                 yield new RXAIFieldProcessor(true, true, true);

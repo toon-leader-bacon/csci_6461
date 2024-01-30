@@ -5,7 +5,7 @@ import org.nocab.nocabmachine.nocab.BinaryNumber;
 public class SourceProgramLine {
 
     public SourceProgramLine() {
-        this.memoryLocation = new BinaryNumber();
+        this.memoryLocation = null;
         this.instruction = null;
         this.comments = "";
     }
@@ -16,9 +16,9 @@ public class SourceProgramLine {
         this.comments = comments_;
     }
 
-    BinaryNumber memoryLocation;
-    Instruction instruction;
-    String comments;
+    public BinaryNumber memoryLocation;
+    public Instruction instruction;
+    public String comments;
 
     public String assemble() {
         return this.assemble(false);

@@ -9,7 +9,7 @@ import java.util.List; /**
  * .                   5
  */
 public class RegisterToRegisterFieldProcessor_Not extends FieldProcessor {
-    public static final int EXPECTED_FIELD_COUNT = 2;
+    public static final int EXPECTED_FIELD_COUNT = 1;
 
     public static final int RX_SIZE = 2;
     public static final int BLANK_SIZE = 8;

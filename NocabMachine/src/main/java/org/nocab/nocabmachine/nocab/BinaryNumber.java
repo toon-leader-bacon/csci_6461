@@ -12,6 +12,10 @@ public class BinaryNumber {
         });
     }
 
+    public BinaryNumber(int base10Value) {
+        this(Integer.toBinaryString(base10Value));
+    }
+
     public BinaryNumber(ArrayList<Boolean> value) {
         this.setValue(value);
     }

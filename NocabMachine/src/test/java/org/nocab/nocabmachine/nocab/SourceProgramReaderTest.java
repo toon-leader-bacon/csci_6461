@@ -50,9 +50,29 @@ class SourceProgramReaderTest {
     */
 
     @org.junit.jupiter.api.Test
-    void blab() {
+    void runExampleInputFile() {
         SourceProgramReader underTest = new SourceProgramReader();
-        underTest.blab("/Users/nocab/Projects/School/CompArch/csci_6461/NocabMachine/src/test/java/org/nocab/nocabmachine/nocab/SourceProgram.txt");
+        underTest.blab("/Users/nocab/Projects/School/CompArch/csci_6461/NocabMachine/src/test/java/org/nocab/nocabmachine/nocab/SourceProgram.txt",
+                true);
+
+        // 21 JZ 1,0
+        //013100 -> 000101 10 01 0 00000
+        //014100 -> 000110 00 01 0 00000
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void allCommandsInputFile() {
+        SourceProgramReader underTest = new SourceProgramReader();
+        underTest.blab("/Users/nocab/Projects/School/CompArch/csci_6461/NocabMachine/src/test/java/org/nocab/nocabmachine/nocab/AllCommands.txt",
+                true);
+    }
+
+    @org.junit.jupiter.api.Test
+    void evenMoreCommandsInputFile() {
+        SourceProgramReader underTest = new SourceProgramReader();
+        underTest.blab("/Users/nocab/Projects/School/CompArch/csci_6461/NocabMachine/src/test/java/org/nocab/nocabmachine/nocab/EvenMoreCommands.txt",
+                true);
     }
 
 
@@ -108,4 +128,5 @@ class SourceProgramReaderTest {
         */
 
     }
+
 }

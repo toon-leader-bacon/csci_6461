@@ -6,13 +6,16 @@ import org.nocab.nocabmachine.nocab.Utility;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * [011000 000000 CCCCC]
+ * .0    5 6    1 1   1
+ * .            1 2   5
+ */
 public class TrapFieldProcessor extends FieldProcessor {
-    public static final int CODE_SIZE = 10;
+    public static final int CODE_SIZE = 5;
+    public static final int BLANK_SIZE = 5;
 
     public ArrayList<Field> process(String fields) {
-
-
         /*
         Traps to memory address 0, which contains the address of a table in memory.
         Stores the PC+1 in memory location 2.
@@ -35,9 +38,13 @@ public class TrapFieldProcessor extends FieldProcessor {
         if (!Utility.isNumeric(codeStr)) {
             throw new IllegalArgumentException("TRAP instruction with non numeric code field: " + codeStr);
         }
-        
+
+        Field codeField = new Field(fieldTokens.get(0), CODE_SIZE);
+        Field blankField = new Field(0, BLANK_SIZE);
+
         return new ArrayList<>() {{
-            add(new Field(Integer.parseInt(codeStr), CODE_SIZE));
+            add(blankField);
+            add(codeField);
         }};
     }
 }
