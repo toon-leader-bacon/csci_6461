@@ -29,9 +29,9 @@ public class Instruction {
             value = (short) (value | (fieldValue << SHIFT_AMT));
         }
 
-        System.out.printf("Oct: %o\n",value);
-        System.out.printf("Bin: %b\n",value);
-        System.out.println();
+//        System.out.printf("Oct: %o\n",value);
+//        System.out.printf("Bin: %b\n",value);
+//        System.out.println();
         return value;
     }
 
