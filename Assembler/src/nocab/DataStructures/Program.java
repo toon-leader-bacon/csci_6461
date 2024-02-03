@@ -1,6 +1,4 @@
-package org.nocab.nocabmachine.nocab.DataStructures;
-
-import org.nocab.nocabmachine.nocab.DataStructures.Instruction;
+package nocab.DataStructures;
 
 import java.util.ArrayList;
 

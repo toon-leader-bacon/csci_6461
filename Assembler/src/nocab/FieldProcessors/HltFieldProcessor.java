@@ -1,6 +1,6 @@
-package org.nocab.nocabmachine.nocab.FieldProcessors;
+package nocab.FieldProcessors;
 
-import org.nocab.nocabmachine.nocab.Field;
+import nocab.DataStructures.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,9 @@ import java.util.List;
  * .            0     5
  */
 public class HltFieldProcessor extends FieldProcessor {
+
+    public static final int BLANK_SIZE = 10;
+
     @Override
     public ArrayList<Field> process(String fields) {
         // Stops the machine.
@@ -22,6 +25,9 @@ public class HltFieldProcessor extends FieldProcessor {
         if (!fieldTokens.isEmpty()) {
             throw new IllegalArgumentException("HLT operation has unexpected fields: " + fields);
         }
-        return new ArrayList<>();
+        Field blank = new Field(0, BLANK_SIZE);
+        return new ArrayList<>() {{
+            add(blank);
+        }};
     }
 }

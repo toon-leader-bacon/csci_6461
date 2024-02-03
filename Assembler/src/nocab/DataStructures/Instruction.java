@@ -1,18 +1,17 @@
-package org.nocab.nocabmachine.nocab.DataStructures;
+package nocab.DataStructures;
 
-import org.nocab.nocabmachine.nocab.BinaryNumber;
-import org.nocab.nocabmachine.nocab.Field;
+import nocab.BinaryNumber;
 
 import java.util.ArrayList;
 
 public class Instruction {
 
-    public Instruction(Field opCode, ArrayList<Field> fields_) {
+    public Instruction(OpCode opCode, ArrayList<Field> fields_) {
         this.operationCode = opCode;
         this.fields = fields_;
     }
 
-    public Field operationCode;
+    public OpCode operationCode;
     public ArrayList<Field> fields;
 
     public String assemble() {

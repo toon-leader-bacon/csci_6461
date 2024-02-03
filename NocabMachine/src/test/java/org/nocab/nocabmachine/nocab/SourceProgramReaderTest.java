@@ -1,6 +1,7 @@
 package org.nocab.nocabmachine.nocab;
 
 import org.junit.jupiter.api.Test;
+import org.nocab.nocabmachine.nocab.DataStructures.Field;
 
 import java.util.ArrayList;
 

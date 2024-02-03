@@ -1,8 +1,7 @@
 package org.nocab.nocabmachine.nocab;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.nocab.nocabmachine.nocab.DataStructures.OpCode;
 
 class OpCodeFieldFactoryTest {
 
@@ -12,6 +11,6 @@ class OpCodeFieldFactoryTest {
 
     @Test
     void opCodeToValue() {
-        assertEquals(6, OpCodeFieldFactory.opCodeToValue("jz"));
+        assertEquals(6, OpCode.opCodeToValue("jz"));
     }
 }

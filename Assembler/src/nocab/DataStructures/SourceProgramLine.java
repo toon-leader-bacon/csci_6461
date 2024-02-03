@@ -1,6 +1,6 @@
-package org.nocab.nocabmachine.nocab.DataStructures;
+package nocab.DataStructures;
 
-import org.nocab.nocabmachine.nocab.BinaryNumber;
+import nocab.BinaryNumber;
 
 public class SourceProgramLine {
 

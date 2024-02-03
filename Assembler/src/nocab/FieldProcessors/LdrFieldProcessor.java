@@ -1,6 +1,6 @@
-package org.nocab.nocabmachine.nocab.FieldProcessors;
+package nocab.FieldProcessors;
 
-import org.nocab.nocabmachine.nocab.Field;
+import nocab.DataStructures.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +43,10 @@ public class LdrFieldProcessor extends FieldProcessor {
     }
 
     ArrayList<Field> process(String r, String ix, String i, String address) {
-        Field rField = Field.fromDecimalString(r, R_SIZE);
-        Field ixField = Field.fromDecimalString(ix, IX_SIZE);
-        Field iField = Field.fromDecimalString(i, I_SIZE);
-        Field addressField = Field.fromDecimalString(address, ADDRESS_SIZE);
+        Field rField = new Field(r, R_SIZE);
+        Field ixField = new Field(ix, IX_SIZE);
+        Field iField = new Field(i, I_SIZE);
+        Field addressField = new Field(address, ADDRESS_SIZE);
 
         return new ArrayList<>() {{
             add(rField);

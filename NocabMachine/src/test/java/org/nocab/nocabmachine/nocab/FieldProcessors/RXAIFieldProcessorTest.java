@@ -1,7 +1,7 @@
 package org.nocab.nocabmachine.nocab.FieldProcessors;
 
 import org.junit.jupiter.api.Test;
-import org.nocab.nocabmachine.nocab.Field;
+import org.nocab.nocabmachine.nocab.DataStructures.Field;
 
 import java.util.ArrayList;
 

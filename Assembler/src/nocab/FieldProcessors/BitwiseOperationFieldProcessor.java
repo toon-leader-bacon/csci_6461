@@ -1,6 +1,6 @@
-package org.nocab.nocabmachine.nocab.FieldProcessors;
+package nocab.FieldProcessors;
 
-import org.nocab.nocabmachine.nocab.Field;
+import nocab.DataStructures.Field;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class BitwiseOperationFieldProcessor extends FieldProcessor {
 
     @Override
     public ArrayList<Field> process(String fields) {
-        /**
+        /*
          * There should be 4 provided field tokens (plus one blank one)
          */
         List<String> fieldTokens = super.splitFields(fields);

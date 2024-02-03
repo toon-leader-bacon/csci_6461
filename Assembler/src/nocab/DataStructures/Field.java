@@ -1,12 +1,17 @@
-package org.nocab.nocabmachine.nocab;
+package nocab.DataStructures;
 
+import nocab.Utility;
+
+/**
+ * A field is a value associated with an instruction operation.
+ * Each field is (effectively) a binary number of a certain size.
+ */
 public class Field {
 
     public Field(short value_, short size_) {
         this.value = value_;
         this.size = size_;
     }
-
 
     public Field(int value_, short size_) {
         this((short) value_, size_);
@@ -20,22 +25,19 @@ public class Field {
         this((short) value_, (short) size_);
     }
 
+    /**
+     * Construct a Field with a decimal string. NOT BINARY STRING
+     */
     public Field(String value_, int size_) {
-        Field other = Field.fromDecimalString(value_, size_);
-        this.value = other.value;
-        this.size = other.size;
-    }
-
-
-    public static Field fromDecimalString(String value, int size) {
-        if (!Utility.isNumeric((value))) {
+        if (!Utility.isNumeric(value_)) {
             throw new IllegalArgumentException("Can not create field from value string (decimal): " + value);
         }
-        return new Field(Integer.parseInt(value), size);
+        this.value = (short) Integer.parseInt(value_);
+        this.size = (short) size_;
     }
 
-    public short value;
-    public short size;
+    public short value; // The value of this field
+    public short size; // The binary length of this field
 
     /**
      * Convert this Field into a binary string of the appropriate length

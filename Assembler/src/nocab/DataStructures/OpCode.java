@@ -1,150 +1,163 @@
-package org.nocab.nocabmachine.nocab;
+package nocab.DataStructures;
 
-public class OpCodeFieldFactory {
-
+/**
+ * An OpCode is a Field of size 6.
+ * Operation Codes are the first part of an Instruction statement
+ */
+public class OpCode extends Field {
     public static final int OPERATION_CODE_SIZE = 6;
 
-    public static Field opCodeStrToField(String opCode) {
-        return new Field(opCodeToValue(opCode), OPERATION_CODE_SIZE);
+    public OpCode(String name) {
+        super(opCodeToValue(name), OPERATION_CODE_SIZE);
+        this.name = name;
     }
 
+    /**
+     * Convert an Op Code name into it's associated value
+     *
+     * @param opCode The Operation Code name
+     * @return The value of the op code in base 10
+     */
     public static int opCodeToValue(String opCode) {
         opCode = opCode.toLowerCase().replace(":", "");
         switch (opCode) {
             /* Undocumented Instructions */
             case "data" -> {
-                return Integer.parseInt("000", 8);
+                return 0;
             }
             case "loc", "end" -> {
-                return Integer.parseInt("00", 8);
+                return 0;
             }
 
             /* Miscellaneous Instructions */
             case "hlt" -> {
-                return Integer.parseInt("00", 8);
+                return 0;
             }
             case "trap" -> {
-                return Integer.parseInt("045", 8);
+                return 37; // 45 octal
             }
             /* Load/Store Instructions */
             case "ldr" -> {
-                return Integer.parseInt("01", 8);
+                return 1; // 1 octal
             }
             case "str" -> {
-                return Integer.parseInt("02", 8);
+                return 2; // 2 octal
             }
             case "lda" -> {
-                return Integer.parseInt("03", 8);
+                return 3; // 3 octal
             }
             case "ldx" -> {
-                return Integer.parseInt("04", 8);
+                return 4; // 4 octal
             }
             case "stx" -> {
-                return Integer.parseInt("05", 8);
+                return 5; // 5 octal
             }
             /* Transfer Instructions */
             case "setcce" -> {
-                return Integer.parseInt("44", 8);
+                return 36; // 44 octal
             }
             case "jz" -> {
-                return Integer.parseInt("06", 8);
+                return 6; // 6 octal
             }
             case "jne" -> {
-                return Integer.parseInt("07", 8);
+                return 7; // 7 octal
             }
             case "jcc" -> {
-                return Integer.parseInt("10", 8);
+                return 8; // 10 octal
             }
             case "jma" -> {
-                return Integer.parseInt("11", 8);
+                return 9; // 11 octal
             }
             case "jsr" -> {
-                return Integer.parseInt("12", 8);
+                return 10; // 12 octal
             }
             case "rfs" -> {
-                return Integer.parseInt("13", 8);
+                return 11; // 13 octal
             }
             case "sob" -> {
-                return Integer.parseInt("14", 8);
+                return 12; // 14 octal
             }
             case "jge" -> {
-                return Integer.parseInt("15", 8);
+                return 13; // 15 octal
             }
             /* Arithmetic and Logical Instructions */
             case "amr" -> {
-                return Integer.parseInt("16", 8);
+                return 14; // 16 octal
             }
             case "smr" -> {
-                return Integer.parseInt("17", 8);
+                return 15; // 17 octal
             }
             case "air" -> {
-                return Integer.parseInt("20", 8);
+                return 16; // 20 octal
             }
             case "sir" -> {
-                return Integer.parseInt("21", 8);
+                return 17; // 21 octal
             }
             /* Register to Register */
             case "mlt" -> {
-                return Integer.parseInt("22", 8);
+                return 18; // 22 octal
             }
             case "dvd" -> {
-                return Integer.parseInt("23", 8);
+                return 19; // 23 octal
             }
             case "trr" -> {
-                return Integer.parseInt("24", 8);
+                return 20; // 24 octal
             }
             case "and" -> {
-                return Integer.parseInt("25", 8);
+                return 21; // 25 octal
             }
             case "orr" -> {
-                return Integer.parseInt("26", 8);
+                return 22; // 26 octal
             }
             case "not" -> {
-                return Integer.parseInt("27", 8);
+                return 23; // 27 octal
             }
 
-            /* Shit/Rotate Operations */
+            /* Shift/Rotate Operations */
             case "src" -> {
-                return Integer.parseInt("30", 8);
+                return 24; // 30 octal
             }
             case "rrc" -> {
-                return Integer.parseInt("31", 8);
+                return 25; // 32 octal
             }
 
             /* I/O Operations */
             case "in" -> {
-                return Integer.parseInt("32", 8);
+                return 26; // 32 octal
             }
             case "out" -> {
-                return Integer.parseInt("33", 8);
+                return 27; // 33 octal
             }
             case "chk" -> {
-                return Integer.parseInt("34", 8);
+                return 28; // 34 octal
             }
 
             /* Floating Point Instructions/Vector Operations */
             case "fadd" -> {
-                return Integer.parseInt("35", 8);
+                return 29; // 35 octal
             }
             case "fsub" -> {
-                return Integer.parseInt("36", 8);
+                return 30; // 36 octal
             }
             case "vadd" -> {
-                return Integer.parseInt("37", 8);
+                return 31; // 37 octal
             }
             case "vsub" -> {
-                return Integer.parseInt("40", 8);
+                return 32; // 40 octal
             }
             case "cnvrt" -> {
-                return Integer.parseInt("41", 8);
+                return 33; // 42 octal
             }
             case "ldfr" -> {
-                return Integer.parseInt("42", 8);
+                return 34; // 42 octal
             }
             case "stfr" -> {
-                return Integer.parseInt("43", 8);
+                return 35; // 43 octal
             }
             default -> throw new IllegalArgumentException("Unknown Operation Code: " + opCode);
         }
     }
+
+    public String name;
+
 }

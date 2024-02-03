@@ -1,6 +1,6 @@
 package org.nocab.nocabmachine.nocab;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.nocab.nocabmachine.nocab.DataStructures.Field;
 
 class FieldTest {
     @org.junit.jupiter.api.Test

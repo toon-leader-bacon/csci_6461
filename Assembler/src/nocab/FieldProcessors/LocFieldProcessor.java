@@ -1,6 +1,6 @@
-package org.nocab.nocabmachine.nocab.FieldProcessors;
+package nocab.FieldProcessors;
 
-import org.nocab.nocabmachine.nocab.Field;
+import nocab.DataStructures.Field;
 
 import java.util.ArrayList;
 
