@@ -1,6 +1,4 @@
-package org.nocab.nocabmachine;
-
-import org.nocab.nocabmachine.nocab.Word;
+import DataStructures.BinaryNumber;
 
 import java.util.ArrayList;
 
@@ -10,8 +8,8 @@ class WordTest {
 
     @org.junit.jupiter.api.Test
     void setValue() {
-        Word underTest = new Word(); // 0
-        assertEquals(underTest.toString(), "0000000000000000");
+        BinaryNumber underTest = new BinaryNumber(); // 0
+        assertEquals(underTest.toString(), "0");
 
         // Set the binary value 1 (too few 1s)
         underTest.setValue(new ArrayList<>() {
@@ -19,7 +17,7 @@ class WordTest {
                 add(true);
             }
         });
-        assertEquals(underTest.toString(), "0000000000000001");
+        assertEquals(underTest.toString(), "1");
 
 
         // Set the binary value of all 1s
@@ -75,7 +73,7 @@ class WordTest {
                 add(true);
             }
         });
-        assertEquals(underTest.toString(), "1111111111111111");
+        assertEquals(underTest.toString(), "11111111111111111");
 
 
         // Set the binary value to way too many 1s
@@ -150,58 +148,38 @@ class WordTest {
                 add(true);
             }
         });
-        assertEquals(underTest.toString(), "1111111111111111"); // Still only 16 1s
+        assertEquals(underTest.toString(), "1111111111111111111111111111111111111111111111111111111111111111");
     }
 
     @org.junit.jupiter.api.Test
     void getValue() {
-        Word underTest = new Word();
+        BinaryNumber underTest = new BinaryNumber();
         ArrayList<Boolean> false_16 = new ArrayList<>() {
             {
-                add(false);
-                add(false);
-                add(false);
-                add(false);
-
-                add(false);
-                add(false);
-                add(false);
-                add(false);
-
-                add(false);
-                add(false);
-                add(false);
-                add(false);
-
-                add(false);
-                add(false);
-                add(false);
                 add(false);
             }
         };
         assertEquals(underTest.getValue(), false_16);
 
-        assertEquals(new Word("0000_0000_0000_0000").getValue(), Word.ZERO.getValue());
-        assertEquals(new Word("1111_1111_1111_1111").getValue(), Word.ALL_ONES.getValue());
     }
 
     @org.junit.jupiter.api.Test
     void toIntBase10() {
-        assertEquals(new Word("0000_0000_0000_0000").toIntBase10(), 0);
-        assertEquals(new Word("0000_0000_0000_0001").toIntBase10(), 1);
-        assertEquals(new Word("0000_0000_0000_0010").toIntBase10(), 2);
-        assertEquals(new Word("0000_0000_0001_0000").toIntBase10(), 16);
-        assertEquals(new Word("0000_0001_0000_0000").toIntBase10(), 256);
-        assertEquals(new Word("0000_1000_0000_0000").toIntBase10(), 2048);
-        assertEquals(new Word("0100_0000_0000_0000").toIntBase10(), 16384);
-        assertEquals(new Word("1000_0000_0000_0000").toIntBase10(), 32768);
-        assertEquals(new Word("1111_1111_1111_1111").toIntBase10(), 65535);
+        assertEquals(new BinaryNumber("0000_0000_0000_0000").toIntBase10(), 0);
+        assertEquals(new BinaryNumber("0000_0000_0000_0001").toIntBase10(), 1);
+        assertEquals(new BinaryNumber("0000_0000_0000_0010").toIntBase10(), 2);
+        assertEquals(new BinaryNumber("0000_0000_0001_0000").toIntBase10(), 16);
+        assertEquals(new BinaryNumber("0000_0001_0000_0000").toIntBase10(), 256);
+        assertEquals(new BinaryNumber("0000_1000_0000_0000").toIntBase10(), 2048);
+        assertEquals(new BinaryNumber("0100_0000_0000_0000").toIntBase10(), 16384);
+        assertEquals(new BinaryNumber("1000_0000_0000_0000").toIntBase10(), 32768);
+        assertEquals(new BinaryNumber("1111_1111_1111_1111").toIntBase10(), 65535);
     }
 
     @org.junit.jupiter.api.Test
     void toString_Binary() {
-        assertEquals(new Word("0000_0000_0000_0000").toString_Binary(), "0000000000000000");
-        assertEquals(new Word("1111_1111_1111_1111").toString_Binary(), "1111111111111111");
+        assertEquals(new BinaryNumber("0000_0000_0000_0000").toString_Binary(), "0000000000000000");
+        assertEquals(new BinaryNumber("1111_1111_1111_1111").toString_Binary(), "1111111111111111");
     }
 
     @org.junit.jupiter.api.Test

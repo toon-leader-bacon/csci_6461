@@ -1,7 +1,5 @@
-package org.nocab.nocabmachine;
-
 import org.junit.jupiter.api.Test;
-import org.nocab.nocabmachine.nocab.BinaryNumber;
+import DataStructures.BinaryNumber;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

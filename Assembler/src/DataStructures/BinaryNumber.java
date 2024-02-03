@@ -1,7 +1,12 @@
-package org.nocab.nocabmachine.nocab;
+package DataStructures;
+
+import SourceProgramReader.Utility;
 
 import java.util.ArrayList;
 
+/**
+ * A class to represent a Binary Number
+ */
 public class BinaryNumber {
 
     public BinaryNumber() {
@@ -10,6 +15,10 @@ public class BinaryNumber {
                 add(false);
             }
         });
+    }
+
+    public BinaryNumber(int base10Value) {
+        this(Integer.toBinaryString(base10Value));
     }
 
     public BinaryNumber(ArrayList<Boolean> value) {
@@ -56,6 +65,9 @@ public class BinaryNumber {
         return this.value;
     }
 
+    /**
+     * Convert this Binary Number into a base 10 representation
+     */
     public int toIntBase10() {
         int result = 0;
         // Loop over every bit backwards
@@ -71,6 +83,9 @@ public class BinaryNumber {
         return result;
     }
 
+    /**
+     * Convert this Binary number into an Octal representation
+     */
     public String toString_Octal() {
         ArrayList<Boolean> octalNumber = new ArrayList<>(this.getValue());
         // Pad this Binary number until it's a multiple of 3 in length
@@ -83,6 +98,23 @@ public class BinaryNumber {
             sb.append(threeBitsToOctal(octalNumber.get(i), octalNumber.get(i + 1), octalNumber.get(i + 2)));
         }
         return sb.toString();
+    }
+
+    /**
+     * Convert this binary number into an Octal value number with
+     * a minimum length of stringLength.
+     * 0s will be appended to the front (left) of the resultant string
+     * to get to the minimum size.
+     *
+     * @param stringLength The expected size of the output string
+     */
+    public String toString_Octal(int stringLength) {
+        StringBuilder result = new StringBuilder();
+        result.append(this.toString_Octal());
+        while (result.length() < stringLength) {
+            result.insert(0, '0');
+        }
+        return result.toString();
     }
 
     private int threeBitsToOctal(boolean fours, boolean twos, boolean ones) {
@@ -105,7 +137,7 @@ public class BinaryNumber {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(Word.SIZE);
+        StringBuilder sb = new StringBuilder(Utility.WORD_SIZE);
         // Loop over every bit backwards
         for (int i = this.value.size() - 1; i >= 0; i--) {
             boolean currentBit = this.value.get(i);
