@@ -4,7 +4,6 @@ import SourceProgramReader.SourceProgramReader;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-
         String filename = args[0];
 
         SourceProgramReader reader = new SourceProgramReader();

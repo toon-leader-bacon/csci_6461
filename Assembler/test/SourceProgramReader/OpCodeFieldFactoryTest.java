@@ -1,7 +1,9 @@
-package org.nocab.nocabmachine.nocab;
+package SourceProgramReader;
 
 import org.junit.jupiter.api.Test;
-import org.nocab.nocabmachine.nocab.DataStructures.OpCode;
+import DataStructures.OpCode;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OpCodeFieldFactoryTest {
 

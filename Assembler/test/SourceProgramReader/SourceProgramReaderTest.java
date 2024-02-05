@@ -1,7 +1,7 @@
-package org.nocab.nocabmachine.nocab;
+package SourceProgramReader;
 
+import DataStructures.Field;
 import org.junit.jupiter.api.Test;
-import org.nocab.nocabmachine.nocab.DataStructures.Field;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ class SourceProgramReaderTest {
     @org.junit.jupiter.api.Test
     void runExampleInputFile() {
         SourceProgramReader underTest = new SourceProgramReader();
-        underTest.blab("/Users/nocab/Projects/School/CompArch/csci_6461/NocabMachine/src/test/java/org/nocab/nocabmachine/nocab/SourceProgram.txt",
+        underTest.OpenAndReadSourceProgramFile("Assembler/test/SourceProgramReader/SourceProgram.txt",
                 true);
 
         // 21 JZ 1,0
@@ -65,14 +65,14 @@ class SourceProgramReaderTest {
     @org.junit.jupiter.api.Test
     void allCommandsInputFile() {
         SourceProgramReader underTest = new SourceProgramReader();
-        underTest.blab("/Users/nocab/Projects/School/CompArch/csci_6461/NocabMachine/src/test/java/org/nocab/nocabmachine/nocab/AllCommands.txt",
+        underTest.OpenAndReadSourceProgramFile("Assembler/test/SourceProgramReader/AllCommands.txt",
                 true);
     }
 
     @org.junit.jupiter.api.Test
     void evenMoreCommandsInputFile() {
         SourceProgramReader underTest = new SourceProgramReader();
-        underTest.blab("/Users/nocab/Projects/School/CompArch/csci_6461/NocabMachine/src/test/java/org/nocab/nocabmachine/nocab/EvenMoreCommands.txt",
+        underTest.OpenAndReadSourceProgramFile("Assembler/test/SourceProgramReader/EvenMoreCommands.txt",
                 true);
     }
 

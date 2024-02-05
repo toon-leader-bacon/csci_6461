@@ -1,3 +1,5 @@
+package DataStructures;
+
 import DataStructures.BinaryNumber;
 
 import java.util.ArrayList;

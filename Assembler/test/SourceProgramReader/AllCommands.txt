@@ -8,7 +8,7 @@
 	lda 2,2,2,1
 	ldx 2,2,1
 	stx 2,2,1
-
+	LOC	6
 	setcce 2
 	jz 2,2,1
 	jne 2,2,2,1
