@@ -40,6 +40,5 @@ public class SourceProgramLine {
         }
         result.append('\n');
         return result.toString();
-
     }
 }

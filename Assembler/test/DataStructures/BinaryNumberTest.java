@@ -1,3 +1,5 @@
+package DataStructures;
+
 import org.junit.jupiter.api.Test;
 import DataStructures.BinaryNumber;
 
