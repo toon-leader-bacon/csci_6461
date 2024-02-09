@@ -36,11 +36,11 @@ java -jar directory/of/artifacts/with/Assembler.jar \
 
 ## Additional Info:
 We have two programs to run on our assembler:
-1. TestProgram.txt
+1. ExampleProgram.txt
    Example code copied from project spec
 ```bash
  java -jar out/artifacts/Assembler_jar/Assembler.jar \
-      test/SourceProgramReader/TestProgram.txt
+      test/SourceProgramReader/ExampleProgram.txt
 ```
    
 2. AllCommands.txt
