@@ -53,7 +53,7 @@ class SourceProgramReaderTest {
     @org.junit.jupiter.api.Test
     void runExampleInputFile() {
         SourceProgramReader underTest = new SourceProgramReader();
-        underTest.OpenAndReadSourceProgramFile("Assembler/test/SourceProgramReader/TestProgram.txt",
+        underTest.OpenAndReadSourceProgramFile("Assembler/test/SourceProgramReader/ExampleProgram.txt",
                 true);
 
         // 21 JZ 1,0
