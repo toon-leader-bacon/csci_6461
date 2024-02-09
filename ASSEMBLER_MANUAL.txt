@@ -1,0 +1,17 @@
+*******************************
+Part 0: Assembler
+Group 1:
+    Arthur Bacon
+    Ganesh Ghimire
+    Ari-Jit Majumdar
+    Assitan Tandia
+*******************************
+
+Instructions/How to Run:
+
+1. run the following command:
+```bash
+ java -jar out/artifacts/Assembler_jar/Assembler.jar \
+      test/SourceProgramReader/AllCommands.txt
+```
+
