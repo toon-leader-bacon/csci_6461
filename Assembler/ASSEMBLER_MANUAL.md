@@ -15,7 +15,14 @@
  java -jar out/artifacts/Assembler_jar/Assembler.jar \
       test/SourceProgramReader/AllCommands.txt
 ```
+
 ## Expected Output:
+Output files will be stored in this directory:
+```
+```
+These are the expected output files:
+- 
+
 
 
 
@@ -43,4 +50,5 @@ We have two programs to run on our assembler:
       test/SourceProgramReader/AllCommands.txt
 ```
 
-To run other 
+To run alternative programs, simply alter the file names. 
+All programs will be stored in this directory.
