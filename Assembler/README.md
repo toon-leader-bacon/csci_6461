@@ -1,3 +1,5 @@
+:Internal Use:
+
 To run the program, build the jar artifact, open a terminal to the root level of this project, and run the command:
 
 ```bash
